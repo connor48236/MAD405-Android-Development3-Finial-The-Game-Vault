@@ -1,11 +1,8 @@
-package com.example.lab15and17.pojo;
+package com.example.thegamevault.pojo;
 
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +17,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.lab15and17.API.GameSingleton;
-import com.example.lab15and17.R;
+import com.example.thegamevault.API.GameSingleton;
+import com.example.thegamevault.GameDatabase;
+import com.example.thegamevault.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
