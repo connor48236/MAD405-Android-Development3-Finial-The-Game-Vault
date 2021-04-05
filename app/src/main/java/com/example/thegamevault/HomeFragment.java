@@ -68,15 +68,6 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_homepage, container, false);
 
-        GameDatabase db = new GameDatabase(getContext());
-        ArrayList<Game> games = db.getAllGames();
-        db.close();
-
-        RecyclerView recyclerView = view.findViewById(R.id.gameList);
-        CustomGameAdapter adapter = new CustomGameAdapter(games, getContext());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         return view;
     }
 }
