@@ -1,8 +1,7 @@
-package com.example.lab15and17.pojo;
+package com.example.thegamevault.pojo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.ImageView;
 
 public class Game implements Parcelable {
 
