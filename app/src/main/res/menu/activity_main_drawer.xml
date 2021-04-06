@@ -11,10 +11,10 @@
         <item
             android:id="@+id/gameListFragment2"
             android:icon="@drawable/ic_baseline_games_24"
-            android:title="@string/menu_gallery" />
+            android:title="@string/menu_GameList" />
         <item
             android:id="@+id/libraryFragment"
             android:icon="@drawable/ic_baseline_bookmark_border_24"
-            android:title="Library" />
+            android:title="@string/menu_Library" />
     </group>
 </menu>
