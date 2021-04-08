@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="text_sizes_options">
+        <item>40</item>
+        <item>30</item>
+        <item>20</item>
+        <item>16</item>
+    </string-array>
+
+    <string-array name="text_sizes_values">
+        <item>40</item>
+        <item>30</item>
+        <item>20</item>
+        <item>16</item>
+    </string-array>
+
+    <string-array name="colour_options">
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Yellow</item>
+        <item>Green</item>
+    </string-array>
+
+    <string-array name="colour_values">
+        <item>red_app_colour</item>
+        <item>blue_app_colour</item>
+        <item>yellow_app_colour</item>
+        <item>green_app_colour</item>
+    </string-array>
+
+
+</resources>
