@@ -14,7 +14,7 @@
 
 
         <ImageView
-            android:id="@+id/gameImage"
+            android:id="@+id/savedGameImage"
             android:layout_width="130dp"
             android:layout_height="126dp"
             android:layout_marginTop="16dp"
@@ -77,8 +77,8 @@
             android:layout_marginBottom="8dp"
             android:text="Description"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/gameImage"
-            app:layout_constraintEnd_toStartOf="@+id/gameImage"
+            app:layout_constraintBottom_toBottomOf="@+id/savedGameImage"
+            app:layout_constraintEnd_toStartOf="@+id/savedGameImage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/gameName" />
 

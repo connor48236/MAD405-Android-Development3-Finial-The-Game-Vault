@@ -104,7 +104,7 @@ public class CustomGameAdapter extends RecyclerView.Adapter<CustomGameAdapter.Cu
         public CustomGameViewHolder(@NonNull View view){
             super(view);
             this.name = view.findViewById(R.id.gameName);
-            this.gameImage = view.findViewById(R.id.gameImage);
+            this.gameImage = view.findViewById(R.id.savedGameImage);
             this.description = view.findViewById(R.id.description);
             this.rating = view.findViewById(R.id.rating);
             this.developer = view.findViewById(R.id.developer);
