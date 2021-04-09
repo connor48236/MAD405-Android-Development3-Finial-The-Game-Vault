@@ -52,7 +52,7 @@ public class CustomGameAdapter extends RecyclerView.Adapter<CustomGameAdapter.Cu
         holder.gameImage.setImageResource(Integer.valueOf(game.getImage()));
         holder.developer.setText(game.getDeveloper());
         holder.rating.setText(String.valueOf(game.getRating()));
-        String url = "https://api.rawg.io/api/games/{29c026ab8a7e414fb51447219aaa3397}";
+        String url = "GET https://api.rawg.io/api/games?key=29c026ab8a7e414fb51447219aaa3397";
 
 
         GameDatabase gameDatabase = new GameDatabase(context);
