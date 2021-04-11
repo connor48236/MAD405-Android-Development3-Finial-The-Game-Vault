@@ -1,5 +1,6 @@
 package com.example.thegamevault;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -83,8 +84,14 @@ public class GameListFragment extends Fragment {
 
 
         SearchView gameSearch = view.findViewById(R.id.gameSearch);
+
         String usersQuery = gameSearch.getQuery().toString();
+        Log.d("userEntered", usersQuery);
         String url = "https://api.rawg.io/api/games?&search=" + usersQuery + "&key=29c026ab8a7e414fb51447219aaa3397";
+
+
+
+
 
 
         //String url = "https://api.rawg.io/api/games?&page_size=100&key=29c026ab8a7e414fb51447219aaa3397";
