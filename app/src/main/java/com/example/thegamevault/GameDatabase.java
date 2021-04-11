@@ -64,8 +64,6 @@ public class GameDatabase  extends SQLiteOpenHelper {
 
         values.put(COLUMN_NAME, game.getName());
         values.put(COLUMN_IMAGE, game.getImage());
-        values.put(COLUMN_DESCRIPTION, game.getDescription());
-        values.put(COLUMN_DEVELOPER, game.getDeveloper());
         values.put(COLUMN_RATING, game.getRating());
 
         db.insert(TABLE_GAMES, null, values);
@@ -81,12 +79,12 @@ public class GameDatabase  extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()){
             game = new Game(
-                    cursor.getInt(0),
+                    cursor.getString(0),
                     cursor.getString(1),
                     cursor.getString(2),
                     cursor.getString(3),
                     cursor.getString(4),
-                    cursor.getDouble(5)
+                    cursor.getString(5)
             );
         }
         db.close();
@@ -100,12 +98,12 @@ public class GameDatabase  extends SQLiteOpenHelper {
         ArrayList<Game> games = new ArrayList<>();
         while (cursor.moveToNext()){
             games.add(new Game(
-                    cursor.getInt(0),
+                    cursor.getString(0),
                     cursor.getString(1),
                     cursor.getString(2),
                     cursor.getString(3),
                     cursor.getString(4),
-                    cursor.getDouble(5)
+                    cursor.getString(5)
             ));
         }
         db.close();
@@ -119,8 +117,6 @@ public class GameDatabase  extends SQLiteOpenHelper {
 
         values.put(COLUMN_NAME, game.getName());
         values.put(COLUMN_IMAGE, game.getImage());
-        values.put(COLUMN_DESCRIPTION, game.getDescription());
-        values.put(COLUMN_DEVELOPER, game.getDeveloper());
         values.put(COLUMN_RATING, game.getRating());
 
         return db.update(TABLE_GAMES, values, COLUMN_ID + "=?",

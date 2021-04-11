@@ -6,12 +6,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.thegamevault.API.GameSingleton;
 import com.example.thegamevault.pojo.CustomGameAdapter;
 import com.example.thegamevault.pojo.Game;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -66,16 +76,67 @@ public class GameListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_homepage, container, false);
+        View view = inflater.inflate(R.layout.fragment_game_list, container, false);
 
-        GameDatabase db = new GameDatabase(getContext());
-        ArrayList<Game> games = db.getAllGames();
-        db.close();
+        //GameDatabase db = new GameDatabase(getContext());
+        //ArrayList<Game> games = db.getAllGames();
+        //db.close();
 
-        RecyclerView recyclerView = view.findViewById(R.id.gameList);
-        CustomGameAdapter adapter = new CustomGameAdapter(games, getContext());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        String url = "https://api.rawg.io/api/games?&page_size=100&key=29c026ab8a7e414fb51447219aaa3397";
+
+
+       // GameDatabase gameDatabase = new GameDatabase(getContext());
+        //if (gameDatabase.getAllGames() == null){
+        Log.d("hello", "test2");
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+//                                JSONObject mainObject = response.getJSONObject("main");
+//                                game.setName(mainObject.getString("name"));
+//                                game.setDescription(mainObject.getString("description"));
+//                                game.setDeveloper(mainObject.getString("released"));
+//                                game.setRating(mainObject.getDouble("metacritic"));
+//                                game.setImage(mainObject.getString("background_image"));
+//
+//                                GameDatabase db = new GameDatabase(context);
+//                                db.updateGame(game);
+//                                Log.d("UPDATE", game.getName() + " NAME UPDATED");
+                            ArrayList<Game> games = new ArrayList<>();
+
+                            JSONArray gamesArray = response.getJSONArray("results");
+
+                            for (int i = 0; i < gamesArray.length(); i++){
+                                String name = gamesArray.getJSONObject(i).getString("name");
+                                String released = gamesArray.getJSONObject(i).getString("released");
+                                String metacritic = gamesArray.getJSONObject(i).getString("metacritic");
+                                String background_image = gamesArray.getJSONObject(i).getString("background_image");
+                                if (metacritic == "null"){
+                                    metacritic = "unRated";
+                                }
+                                games.add(new Game(name, released, metacritic, background_image));
+                            }
+                            RecyclerView recyclerView = view.findViewById(R.id.gameListView);
+                            CustomGameAdapter adapter = new CustomGameAdapter(games, getContext());
+                            recyclerView.setAdapter(adapter);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("VOLLEY_ERROR", error.getLocalizedMessage());
+                    }
+                });
+        GameSingleton.getInstance(getContext()).getRequestQueue().add(request);
+
+
+
 
         return view;
     }

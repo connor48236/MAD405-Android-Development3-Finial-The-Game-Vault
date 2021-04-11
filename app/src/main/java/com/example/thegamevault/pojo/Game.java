@@ -8,26 +8,22 @@ public class Game implements Parcelable {
     private int id;
     private String name;
     private String image;
-    private String description;
-    private String developer;
-    private double rating;
+    private String released;
+    private String rating;
 
     //Create the game object to insert
-    public Game(String name, String description, String image, String developer, double rating){
+    public Game(String name, String description, String image, String developer, String released , String rating){
         this.name = name;
         this.image = image;
-        this.description = description;
-        this.developer = developer;
+        this.released = released;
         this.rating = rating;
     }
 
     //Create game object to read
-    public Game(int id,String name, String description, String image, String developer, double rating){
+    public Game(int id,String name, String description, String image,String released , String developer, String rating){
         this.id = id;
         this.name = name;
         this.image = image;
-        this.description = description;
-        this.developer = developer;
         this.rating = rating;
     }
 
@@ -35,23 +31,29 @@ public class Game implements Parcelable {
         id = in.readInt();
         name = in.readString();
         image = in.readString();
-        description = in.readString();
-        developer = in.readString();
-        rating = in.readDouble();
+        released = in.readString();
+        rating = in.readString();
     }
 
     public Game(){
 
     }
 
+    public Game(String name, String released, String metacritic, String background_image) {
+        this.name = name;
+        this.released = released;
+        this.rating = metacritic;
+        this.image = background_image;
+    }
+
+
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
         parcel.writeString(name);
         parcel.writeString(image);
-        parcel.writeString(description);
-        parcel.writeString(developer);
-        parcel.writeDouble(rating);
+        parcel.writeString(rating);
+        parcel.writeString(released);
     }
 
     @Override
@@ -93,27 +95,19 @@ public class Game implements Parcelable {
         this.image = image;
     }
 
-    public String getDescription() {
-        return description;
+    public String getReleased() {
+        return released;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setReleased(String released) {
+        this.released = released;
     }
 
-    public String getDeveloper() {
-        return developer;
-    }
-
-    public void setDeveloper(String developer) {
-        this.developer = developer;
-    }
-
-    public double getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 
