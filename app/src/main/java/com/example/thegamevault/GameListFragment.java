@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -23,6 +24,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 /**
@@ -78,31 +81,21 @@ public class GameListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_game_list, container, false);
 
-        //GameDatabase db = new GameDatabase(getContext());
-        //ArrayList<Game> games = db.getAllGames();
-        //db.close();
 
-        String url = "https://api.rawg.io/api/games?&page_size=100&key=29c026ab8a7e414fb51447219aaa3397";
+        SearchView gameSearch = view.findViewById(R.id.gameSearch);
+        String usersQuery = gameSearch.getQuery().toString();
+        String url = "https://api.rawg.io/api/games?&search=" + usersQuery + "&key=29c026ab8a7e414fb51447219aaa3397";
 
 
-       // GameDatabase gameDatabase = new GameDatabase(getContext());
-        //if (gameDatabase.getAllGames() == null){
-        Log.d("hello", "test2");
+        //String url = "https://api.rawg.io/api/games?&page_size=100&key=29c026ab8a7e414fb51447219aaa3397";
+
+
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-//                                JSONObject mainObject = response.getJSONObject("main");
-//                                game.setName(mainObject.getString("name"));
-//                                game.setDescription(mainObject.getString("description"));
-//                                game.setDeveloper(mainObject.getString("released"));
-//                                game.setRating(mainObject.getDouble("metacritic"));
-//                                game.setImage(mainObject.getString("background_image"));
-//
-//                                GameDatabase db = new GameDatabase(context);
-//                                db.updateGame(game);
-//                                Log.d("UPDATE", game.getName() + " NAME UPDATED");
                             ArrayList<Game> games = new ArrayList<>();
 
                             JSONArray gamesArray = response.getJSONArray("results");
@@ -113,7 +106,7 @@ public class GameListFragment extends Fragment {
                                 String metacritic = gamesArray.getJSONObject(i).getString("metacritic");
                                 String background_image = gamesArray.getJSONObject(i).getString("background_image");
                                 if (metacritic == "null"){
-                                    metacritic = "unRated";
+                                    metacritic = "Not yet Rated";
                                 }
                                 games.add(new Game(name, released, metacritic, background_image));
                             }
