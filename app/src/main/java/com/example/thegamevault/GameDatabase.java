@@ -28,14 +28,14 @@ public class GameDatabase  extends SQLiteOpenHelper {
     //The table
     public static final String COLUMN_NAME = "name"; //Game name
     public static final String COLUMN_IMAGE = "image"; //Image url
-    public static final String COLUMN_RELEASE = "release"; //Game release date
+    public static final String COLUMN_RELEASED = "released"; //Game release date
     public static final String COLUMN_RATING = "rating"; //Game rating
 
     //Create table
     public static final String CREATE_GAMES_TABLE = "CREATE TABLE " +
             TABLE_GAMES + "(" + COLUMN_ID + " INTEGER PRIMARY KEY," +
-            COLUMN_NAME + " TEXT, " + COLUMN_IMAGE + " TEXT, " + COLUMN_RELEASE + "TEXT, " +
-            COLUMN_RATING + " DOUBLE)";
+            COLUMN_NAME + " TEXT, " + COLUMN_IMAGE + " TEXT, " + COLUMN_RELEASED + " TEXT, " +
+            COLUMN_RATING + " TEXT)";
 
     public GameDatabase(@Nullable Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -62,7 +62,7 @@ public class GameDatabase  extends SQLiteOpenHelper {
 
         values.put(COLUMN_NAME, game.getName());
         values.put(COLUMN_IMAGE, game.getImage());
-        values.put(COLUMN_RELEASE, game.getReleased());
+        values.put(COLUMN_RELEASED, game.getReleased());
         values.put(COLUMN_RATING, game.getRating());
 
         db.insert(TABLE_GAMES, null, values);
@@ -73,17 +73,16 @@ public class GameDatabase  extends SQLiteOpenHelper {
     public Game getGame(int id){
         SQLiteDatabase db = this.getReadableDatabase();
         Game game = null;
-        Cursor cursor = db.query(TABLE_GAMES, new String[]{COLUMN_ID, COLUMN_NAME, COLUMN_IMAGE, COLUMN_RELEASE, COLUMN_RATING}, COLUMN_ID + "= ?",
+        Cursor cursor = db.query(TABLE_GAMES, new String[]{COLUMN_ID, COLUMN_NAME, COLUMN_IMAGE, COLUMN_RELEASED, COLUMN_RATING}, COLUMN_ID + "= ?",
                 new String[]{String.valueOf(id)}, null, null, null);
 
         if (cursor.moveToFirst()){
             game = new Game(
-                    cursor.getString(0),
+                    cursor.getInt(0),
                     cursor.getString(1),
                     cursor.getString(2),
                     cursor.getString(3),
-                    cursor.getString(4),
-                    cursor.getString(5)
+                    cursor.getString(4)
             );
         }
         db.close();
@@ -97,13 +96,12 @@ public class GameDatabase  extends SQLiteOpenHelper {
         ArrayList<Game> games = new ArrayList<>();
         while (cursor.moveToNext()){
             games.add(new Game(
-                    cursor.getString(0),
+                    cursor.getInt(0),
                     cursor.getString(1),
                     cursor.getString(2),
                     cursor.getString(3),
-                    cursor.getString(4),
-                    cursor.getString(5)
-            ));
+                    cursor.getString(4)
+                ));
         }
         db.close();
         return games;
@@ -116,7 +114,7 @@ public class GameDatabase  extends SQLiteOpenHelper {
 
         values.put(COLUMN_NAME, game.getName());
         values.put(COLUMN_IMAGE, game.getImage());
-        values.put(COLUMN_RELEASE, game.getReleased());
+        values.put(COLUMN_RELEASED, game.getReleased());
         values.put(COLUMN_RATING, game.getRating());
 
         return db.update(TABLE_GAMES, values, COLUMN_ID + "=?",

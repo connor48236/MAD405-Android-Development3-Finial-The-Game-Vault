@@ -11,13 +11,6 @@ public class Game implements Parcelable {
     private String released;
     private String rating;
 
-    //Create the game object to insert
-    public Game(String name, String description, String image, String developer, String released , String rating){
-        this.name = name;
-        this.image = image;
-        this.released = released;
-        this.rating = rating;
-    }
 
     protected Game(Parcel in){
         id = in.readInt();
@@ -30,6 +23,15 @@ public class Game implements Parcelable {
     public Game(){
 
     }
+
+    public Game(int id, String name, String released, String metacritic, String background_image) {
+        this.id = id;
+        this.name = name;
+        this.released = released;
+        this.rating = metacritic;
+        this.image = background_image;
+    }
+
 
     public Game(String name, String released, String metacritic, String background_image) {
         this.name = name;
