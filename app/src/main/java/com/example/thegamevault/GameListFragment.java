@@ -92,8 +92,6 @@ public class GameListFragment extends Fragment {
 
 
 
-
-
         //String url = "https://api.rawg.io/api/games?&page_size=100&key=29c026ab8a7e414fb51447219aaa3397";
 
 
