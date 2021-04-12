@@ -19,14 +19,6 @@ public class Game implements Parcelable {
         this.rating = rating;
     }
 
-    //Create game object to read
-    public Game(int id,String name, String description, String image,String released , String developer, String rating){
-        this.id = id;
-        this.name = name;
-        this.image = image;
-        this.rating = rating;
-    }
-
     protected Game(Parcel in){
         id = in.readInt();
         name = in.readString();

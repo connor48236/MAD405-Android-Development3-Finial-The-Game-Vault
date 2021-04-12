@@ -7,16 +7,16 @@
     <fragment
         android:id="@+id/homeFragment2"
         android:name="com.example.thegamevault.HomeFragment"
-        android:label="fragment_homepage"
+        android:label="@string/menu_home"
         tools:layout="@layout/fragment_homepage" />
     <fragment
         android:id="@+id/libraryFragment"
         android:name="com.example.thegamevault.libraryFragment"
-        android:label="fragment_library"
+        android:label="@string/menu_Library"
         tools:layout="@layout/fragment_library" />
     <fragment
         android:id="@+id/gameListFragment2"
         android:name="com.example.thegamevault.GameListFragment"
-        android:label="fragment_game_list"
+        android:label="@string/menu_GameList"
         tools:layout="@layout/fragment_game_list" />
 </navigation>

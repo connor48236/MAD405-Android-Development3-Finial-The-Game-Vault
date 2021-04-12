@@ -1,5 +1,6 @@
 package com.example.thegamevault;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,11 +85,54 @@ public class GameListFragment extends Fragment {
 
 
         SearchView gameSearch = view.findViewById(R.id.gameSearch);
-        String usersQuery = gameSearch.getQuery().toString();
-        String url = "https://api.rawg.io/api/games?&search=" + usersQuery + "&key=29c026ab8a7e414fb51447219aaa3397";
+        if (gameSearch.getQuery().toString().isEmpty()) {
+            String usersQuery = gameSearch.getQuery().toString();
+            String url = "https://api.rawg.io/api/games?&search=" + usersQuery + "&key=29c026ab8a7e414fb51447219aaa3397";
+
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                ArrayList<Game> games = new ArrayList<>();
+
+                                JSONArray gamesArray = response.getJSONArray("results");
+
+                                for (int i = 0; i < gamesArray.length(); i++){
+                                    String name = gamesArray.getJSONObject(i).getString("name");
+                                    String released = gamesArray.getJSONObject(i).getString("released");
+                                    String metacritic = gamesArray.getJSONObject(i).getString("metacritic");
+                                    String background_image = gamesArray.getJSONObject(i).getString("background_image");
+                                    if (metacritic == "null"){
+                                        metacritic = "Not yet Rated";
+                                    }
+                                    games.add(new Game(name, released, metacritic, background_image));
+                                }
+                                RecyclerView recyclerView = view.findViewById(R.id.gameListView);
+                                CustomGameAdapter adapter = new CustomGameAdapter(games, getContext());
+                                recyclerView.setAdapter(adapter);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("VOLLEY_ERROR", error.getLocalizedMessage());
+                        }
+                    });
+            GameSingleton.getInstance(getContext()).getRequestQueue().add(request);
+
+        }
 
 
-        //String url = "https://api.rawg.io/api/games?&page_size=100&key=29c026ab8a7e414fb51447219aaa3397";
+            String url = "https://api.rawg.io/api/games?&page_size=100&key=29c026ab8a7e414fb51447219aaa3397";
+
+
+
 
 
 
