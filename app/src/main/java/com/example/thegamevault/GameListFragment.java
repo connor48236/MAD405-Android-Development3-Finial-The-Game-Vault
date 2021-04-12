@@ -90,7 +90,7 @@ public class GameListFragment extends Fragment {
         Log.d("userEntered", usersQuery);
         String url = "https://api.rawg.io/api/games?&search=" + usersQuery + "&key=29c026ab8a7e414fb51447219aaa3397";
 
-        
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
