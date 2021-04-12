@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,13 +90,7 @@ public class GameListFragment extends Fragment {
         Log.d("userEntered", usersQuery);
         String url = "https://api.rawg.io/api/games?&search=" + usersQuery + "&key=29c026ab8a7e414fb51447219aaa3397";
 
-
-
-
-        //String url = "https://api.rawg.io/api/games?&page_size=100&key=29c026ab8a7e414fb51447219aaa3397";
-
-
-
+        
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override

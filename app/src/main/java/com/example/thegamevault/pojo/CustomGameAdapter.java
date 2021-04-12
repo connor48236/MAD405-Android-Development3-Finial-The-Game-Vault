@@ -3,6 +3,7 @@ package com.example.thegamevault.pojo;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,11 +67,26 @@ public class CustomGameAdapter extends RecyclerView.Adapter<CustomGameAdapter.Cu
             super(view);
             this.name = view.findViewById(R.id.gameName);
             this.gameImage = view.findViewById(R.id.savedGameImage);
-
             this.rating = view.findViewById(R.id.rating);
             this.released = view.findViewById(R.id.developer);
             this.saveGame = view.findViewById(R.id.saveGame);
             itemView.setOnClickListener(this);
+            saveGame.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    new AlertDialog.Builder(context).setTitle("Save Game").setMessage("Would you like to save this game to your Library").setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    GameDatabase db = new GameDatabase(context);
+                                    db.addGame(new Game(name.toString(), gameImage.toString(), rating.toString(), released.toString()));
+                                    Log.d("gameTest", db.getGame(1).toString());
+                                    db.close();
+                                }
+                            })
+                            .setNegativeButton("Don't Save", null).show();
+                }
+            });
         }
 
         @Override

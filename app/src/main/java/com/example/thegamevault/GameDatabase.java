@@ -28,15 +28,13 @@ public class GameDatabase  extends SQLiteOpenHelper {
     //The table
     public static final String COLUMN_NAME = "name"; //Game name
     public static final String COLUMN_IMAGE = "image"; //Image url
-    public static final String COLUMN_DESCRIPTION = "description"; //Game description
-    public static final String COLUMN_DEVELOPER = "developer"; //Game developer
+    public static final String COLUMN_RELEASE = "release"; //Game release date
     public static final String COLUMN_RATING = "rating"; //Game rating
 
     //Create table
     public static final String CREATE_GAMES_TABLE = "CREATE TABLE " +
             TABLE_GAMES + "(" + COLUMN_ID + " INTEGER PRIMARY KEY," +
-            COLUMN_NAME + " TEXT, " + COLUMN_IMAGE + " TEXT, " +
-            COLUMN_DESCRIPTION + " TEXT, " + COLUMN_DEVELOPER + " TEXT, " +
+            COLUMN_NAME + " TEXT, " + COLUMN_IMAGE + " TEXT, " + COLUMN_RELEASE + "TEXT, " +
             COLUMN_RATING + " DOUBLE)";
 
     public GameDatabase(@Nullable Context context){
@@ -64,6 +62,7 @@ public class GameDatabase  extends SQLiteOpenHelper {
 
         values.put(COLUMN_NAME, game.getName());
         values.put(COLUMN_IMAGE, game.getImage());
+        values.put(COLUMN_RELEASE, game.getReleased());
         values.put(COLUMN_RATING, game.getRating());
 
         db.insert(TABLE_GAMES, null, values);
@@ -74,7 +73,7 @@ public class GameDatabase  extends SQLiteOpenHelper {
     public Game getGame(int id){
         SQLiteDatabase db = this.getReadableDatabase();
         Game game = null;
-        Cursor cursor = db.query(TABLE_GAMES, new String[]{COLUMN_ID, COLUMN_NAME, COLUMN_IMAGE, COLUMN_DESCRIPTION, COLUMN_DEVELOPER, COLUMN_RATING}, COLUMN_ID + "= ?",
+        Cursor cursor = db.query(TABLE_GAMES, new String[]{COLUMN_ID, COLUMN_NAME, COLUMN_IMAGE, COLUMN_RELEASE, COLUMN_RATING}, COLUMN_ID + "= ?",
                 new String[]{String.valueOf(id)}, null, null, null);
 
         if (cursor.moveToFirst()){
@@ -117,6 +116,7 @@ public class GameDatabase  extends SQLiteOpenHelper {
 
         values.put(COLUMN_NAME, game.getName());
         values.put(COLUMN_IMAGE, game.getImage());
+        values.put(COLUMN_RELEASE, game.getReleased());
         values.put(COLUMN_RATING, game.getRating());
 
         return db.update(TABLE_GAMES, values, COLUMN_ID + "=?",
