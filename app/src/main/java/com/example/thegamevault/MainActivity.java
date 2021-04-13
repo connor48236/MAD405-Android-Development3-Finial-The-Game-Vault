@@ -98,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
         }
+        if (id == R.id.creditsMenu){
+            setContentView(R.layout.fragment_creadits);
+        }
 
         return super.onOptionsItemSelected(item);
     }

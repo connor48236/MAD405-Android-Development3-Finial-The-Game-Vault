@@ -1,5 +1,7 @@
 package com.example.thegamevault;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -73,14 +75,21 @@ public class libraryFragment extends Fragment {
         libraryViewPager = view.findViewById(R.id.libraryViewPager);
         //sets the adapter
         libraryViewPager.setAdapter(new CustomViewPager2Adapter(getActivity()));
+        //Sets transformer
+        libraryViewPager.setPageTransformer(new DepthTransformer());
+
+        ArrayList<Game> games = new ArrayList<>();
+
 
         return view;
     }
 
-    //Class for adapter
-    private class CustomViewPager2Adapter extends FragmentStateAdapter{
 
-        public CustomViewPager2Adapter(@NonNull FragmentActivity fragmentActivity){
+
+    //Class for adapter
+    private class CustomViewPager2Adapter extends FragmentStateAdapter implements View.OnClickListener {
+
+        public CustomViewPager2Adapter(@NonNull FragmentActivity fragmentActivity) {
             super(fragmentActivity);
         }
 
@@ -93,19 +102,19 @@ public class libraryFragment extends Fragment {
             ArrayList<Game> games = db.getAllGames();
             db.close();
 
-            libraryItemFragment frag = libraryItemFragment.newInstance("No Title saved", "No rating saved", "No date Saved", "No image saved");;
+            libraryItemFragment frag = libraryItemFragment.newInstance("No Title saved", "No rating saved", "No date Saved", "No image saved");
+            ArrayList<libraryItemFragment> itemFrag = new ArrayList<>();
 
             //Will run through all the games all pull the ones needed and set the items to the fragment
-            for (int i = 0; i < games.size(); i++){
+            for (int i = 0; i < games.size(); i++) {
                 Game game = games.get(i);
-                frag = libraryItemFragment.newInstance(game.getName(), game.getRating(), game.getReleased(), game.getImage());
+                itemFrag.add(libraryItemFragment.newInstance(game.getName(), game.getRating(), game.getReleased(), game.getImage()));
             }
 
 
-            return frag;
+            return itemFrag.get(position);
 
-
-            }
+        }
 
 
         @Override
@@ -115,6 +124,66 @@ public class libraryFragment extends Fragment {
             ArrayList<Game> games = db.getAllGames();
             db.close();
             return games.size();
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            ArrayList<Game>games = new ArrayList<>();
+
+            new AlertDialog.Builder(getContext()).setTitle("Delete").setMessage("Are you sure you would like to delete this game?").setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            GameDatabase db = new GameDatabase(getContext());
+                            db.deleteGame(games.get(getItemCount()).getId());
+                            games.remove(getItemCount());
+                            notifyItemRemoved(getItemCount());
+                            db.close();
+                        }
+                    })
+                    .setNegativeButton("No", null).show();
+        }
+
+    }
+
+
+    public class DepthTransformer implements ViewPager2.PageTransformer{
+        private static final float MIN_SCALE = 0.75f;
+            public void transformPage(View view, float position) {
+                int pageWidth = view.getWidth();
+
+                if (position < -1) {
+                    // This page is way off-screen to the left.
+                    view.setAlpha(0f);
+
+                } else if (position <= 0) {
+                    // Use the default slide transition when moving to the left page
+                    view.setAlpha(1f);
+                    view.setTranslationX(0f);
+                    view.setTranslationZ(0f);
+                    view.setScaleX(1f);
+                    view.setScaleY(1f);
+
+                } else if (position <= 1) {
+                    // Fade the page out.
+                    view.setAlpha(1 - position);
+
+                    // Counteract the default slide transition
+                    view.setTranslationX(pageWidth * -position);
+                    // Move it behind the left page
+                    view.setTranslationZ(-1f);
+
+                    // Scale the page down (between MIN_SCALE and 1)
+                    float scaleFactor = MIN_SCALE
+                            + (1 - MIN_SCALE) * (1 - Math.abs(position));
+                    view.setScaleX(scaleFactor);
+                    view.setScaleY(scaleFactor);
+
+                } else {
+                    // This page is way off-screen to the right.
+                    view.setAlpha(0f);
+                }
         }
     }
 

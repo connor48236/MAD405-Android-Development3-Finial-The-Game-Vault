@@ -74,7 +74,7 @@ public class CustomGameAdapter extends RecyclerView.Adapter<CustomGameAdapter.Cu
             int fontSize = Integer.parseInt(textSize);
 
             this.name = view.findViewById(R.id.gameName);
-            this.gameImage = view.findViewById(R.id.savedGameImage);
+            this.gameImage = view.findViewById(R.id.gameImage);
             this.rating = view.findViewById(R.id.rating);
             this.released = view.findViewById(R.id.developer);
             this.saveGame = view.findViewById(R.id.saveGame);
@@ -92,7 +92,7 @@ public class CustomGameAdapter extends RecyclerView.Adapter<CustomGameAdapter.Cu
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     GameDatabase db = new GameDatabase(context);
-                                    db.addGame(new Game(name.getText().toString(), gameImage.getDrawable().toString(), rating.getText().toString(), released.getText().toString()));
+                                    db.addGame(new Game(name.getText().toString(), gameImage.toString(), rating.getText().toString(), released.getText().toString()));
                                     db.close();
                                 }
                             })
@@ -103,18 +103,7 @@ public class CustomGameAdapter extends RecyclerView.Adapter<CustomGameAdapter.Cu
 
         @Override
         public void onClick(View view) {
-            new AlertDialog.Builder(context).setTitle("Delete").setMessage("Are you sure you would like to delete this game?").setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            GameDatabase db = new GameDatabase(context);
-                            db.deleteGame(games.get(getLayoutPosition()).getId());
-                            games.remove(getLayoutPosition());
-                            notifyItemRemoved(getAdapterPosition());
-                            db.close();
-                        }
-                    })
-                    .setNegativeButton("No", null).show();
+
         }
     }
 }

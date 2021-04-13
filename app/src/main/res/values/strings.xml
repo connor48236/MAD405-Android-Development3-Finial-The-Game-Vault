@@ -19,6 +19,18 @@
     <string name="app_colour">App Colour</string>
     <string name="email">Email</string>
     <string name="username">username</string>
+
+    <string name="credits">Credits</string>
+    <string name="creditsDesc">
+        * All information and images for the games are from RAWG Video Games Database using there public API \n
+        * Designed and coded by Connor Cozad \n
+    </string>
+    
+    
+    <string name="emailUs">Email</string>
+    <string name="call">Call</string>
+    <string name="text">Text</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

@@ -1,11 +1,15 @@
 package com.example.thegamevault;
 
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PictureDrawable;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,9 +91,9 @@ public class libraryItemFragment extends Fragment {
             name.setTextSize(fontSize + 10);
         }
         //This will find and set the text for the rating
-        if (mParam2 != null){
+        if (mParam4 != null){
             TextView rating = view.findViewById(R.id.savedGameRating);
-            rating.setText(mParam2);
+            rating.setText(mParam4);
             rating.setTextSize(fontSize);
         }
         //This will find and set the text for the date
@@ -99,9 +103,13 @@ public class libraryItemFragment extends Fragment {
             date.setTextSize(fontSize);
         }
         //This will find and set the image for the savedImage using Picasso
-        if (mParam4 != null){
+        if (mParam2 != null){
             ImageView gameImage = view.findViewById(R.id.savedGameImage);
-            Picasso.get().load(mParam4).resize(100, 100).into(gameImage);
+           // gameImage.setImageDrawable(PictureDrawable.createFromPath(mParam2));
+
+            Picasso.get().load(mParam2).resize(100, 100).into(gameImage);
+
+
         }
 
         return view;
