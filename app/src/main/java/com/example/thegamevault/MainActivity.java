@@ -2,6 +2,8 @@ package com.example.thegamevault;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
@@ -27,19 +29,27 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+
+        //Grabs the colour for the app
+        String appColour = preferences.getString("colour_options", "blue");
+
+        //Resources.Theme theme = android.R.style.Theme;
+        //setTheme();
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -62,11 +72,13 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         //Stores the email and name entered
-        final String username = preferences.getString("user_name", "user");
+        final String username = preferences.getString("user_name", "username");
         TextView displayUserName = findViewById(R.id.userName);
+        displayUserName.setText(username);
 
-        final String email = preferences.getString("user_email", "email");
+        final String email = preferences.getString("user_email", "Email");
         TextView displayUserEmail = findViewById(R.id.userEmail);
+        displayUserEmail.setText(email);
 
 
         return true;

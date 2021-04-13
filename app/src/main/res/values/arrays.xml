@@ -2,16 +2,16 @@
 <resources>
 
     <string-array name="text_sizes_options">
-        <item>40</item>
-        <item>30</item>
+        <item>25</item>
         <item>20</item>
+        <item>18</item>
         <item>16</item>
     </string-array>
 
     <string-array name="text_sizes_values">
-        <item>40</item>
-        <item>30</item>
+        <item>25</item>
         <item>20</item>
+        <item>18</item>
         <item>16</item>
     </string-array>
 
@@ -23,10 +23,10 @@
     </string-array>
 
     <string-array name="colour_values">
-        <item>red_app_colour</item>
-        <item>blue_app_colour</item>
-        <item>yellow_app_colour</item>
-        <item>green_app_colour</item>
+        <item>@color/red</item>
+        <item>@color/blue</item>
+        <item>@color/yellow</item>
+        <item>@color/green</item>
     </string-array>
 
 

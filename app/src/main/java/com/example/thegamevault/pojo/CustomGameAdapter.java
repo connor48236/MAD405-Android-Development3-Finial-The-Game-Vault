@@ -3,6 +3,8 @@ package com.example.thegamevault.pojo;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,11 +67,22 @@ public class CustomGameAdapter extends RecyclerView.Adapter<CustomGameAdapter.Cu
 
         public CustomGameViewHolder(@NonNull View view){
             super(view);
+
+            //Check for the size of the text
+            final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+            final String textSize = preferences.getString("font_size", "16");
+            int fontSize = Integer.parseInt(textSize);
+
             this.name = view.findViewById(R.id.gameName);
             this.gameImage = view.findViewById(R.id.savedGameImage);
             this.rating = view.findViewById(R.id.rating);
             this.released = view.findViewById(R.id.developer);
             this.saveGame = view.findViewById(R.id.saveGame);
+
+            name.setTextSize(fontSize + 10);
+            rating.setTextSize(fontSize);
+            released.setTextSize(fontSize);
+
             itemView.setOnClickListener(this);
             saveGame.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -79,8 +92,7 @@ public class CustomGameAdapter extends RecyclerView.Adapter<CustomGameAdapter.Cu
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     GameDatabase db = new GameDatabase(context);
-                                    db.addGame(new Game(name.toString(), gameImage.toString(), rating.toString(), released.toString()));
-                                    Log.d("gameTest", db.getGame(1).toString());
+                                    db.addGame(new Game(name.getText().toString(), gameImage.getDrawable().toString(), rating.getText().toString(), released.getText().toString()));
                                     db.close();
                                 }
                             })

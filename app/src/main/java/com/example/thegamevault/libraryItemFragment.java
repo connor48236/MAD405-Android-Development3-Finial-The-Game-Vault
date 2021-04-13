@@ -1,9 +1,11 @@
 package com.example.thegamevault;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,25 +75,33 @@ public class libraryItemFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_library_item, container, false);
 
+        //Check for the size of the text
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        final String textSize = preferences.getString("font_size", "20");
+        int fontSize = Integer.parseInt(textSize);
+
         //This will find and set the text for the title
         if (mParam1 != null){
             TextView name = view.findViewById(R.id.savedTitle);
             name.setText(mParam1);
+            name.setTextSize(fontSize + 10);
         }
         //This will find and set the text for the rating
         if (mParam2 != null){
             TextView rating = view.findViewById(R.id.savedGameRating);
             rating.setText(mParam2);
+            rating.setTextSize(fontSize);
         }
         //This will find and set the text for the date
         if (mParam3 != null){
             TextView date = view.findViewById(R.id.savedGameDate);
             date.setText(mParam3);
+            date.setTextSize(fontSize);
         }
         //This will find and set the image for the savedImage using Picasso
         if (mParam4 != null){
             ImageView gameImage = view.findViewById(R.id.savedGameImage);
-            Picasso.get().load(mParam4).resize(1000, 1000).into(gameImage);
+            Picasso.get().load(mParam4).resize(100, 100).into(gameImage);
         }
 
         return view;

@@ -91,16 +91,22 @@ public class libraryFragment extends Fragment {
             //Opens the database and pulls all the games
             GameDatabase db = new GameDatabase(getContext());
             ArrayList<Game> games = db.getAllGames();
+            db.close();
 
+            libraryItemFragment frag = libraryItemFragment.newInstance("No Title saved", "No rating saved", "No date Saved", "No image saved");;
 
             //Will run through all the games all pull the ones needed and set the items to the fragment
             for (int i = 0; i < games.size(); i++){
                 Game game = games.get(i);
-                return libraryItemFragment.newInstance(game.getName(), game.getRating(), game.getReleased(), game.getImage());
-                }
-            db.close();
-            return libraryItemFragment.newInstance("No Title saved", "No rating saved", "No date Saved", "No image saved");
+                frag = libraryItemFragment.newInstance(game.getName(), game.getRating(), game.getReleased(), game.getImage());
             }
+
+
+            return frag;
+
+
+            }
+
 
         @Override
         public int getItemCount() {

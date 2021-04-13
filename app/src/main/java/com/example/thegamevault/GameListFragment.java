@@ -1,12 +1,14 @@
 package com.example.thegamevault;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -83,18 +85,21 @@ public class GameListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_game_list, container, false);
 
-
+        //find the search bar
         SearchView gameSearch = view.findViewById(R.id.gameSearch);
 
+        //Code to execute the search
         String usersQuery = gameSearch.getQuery().toString();
         Log.d("userEntered", usersQuery);
         String url = "https://api.rawg.io/api/games?&search=" + usersQuery + "&key=29c026ab8a7e414fb51447219aaa3397";
 
 
+        //This code will search for the url entered and pull the json info
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        //will try to loop through the info and pull the info needed
                         try {
                             ArrayList<Game> games = new ArrayList<>();
 
@@ -108,11 +113,15 @@ public class GameListFragment extends Fragment {
                                 if (metacritic == "null"){
                                     metacritic = "Not yet Rated";
                                 }
+                                //add a new game when one is found
                                 games.add(new Game(name, released, metacritic, background_image));
                             }
+                            //Create the recycler view
                             RecyclerView recyclerView = view.findViewById(R.id.gameListView);
+                            //Set the adapter to the one made
                             CustomGameAdapter adapter = new CustomGameAdapter(games, getContext());
                             recyclerView.setAdapter(adapter);
+                            //set the layout manager
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
                         } catch (JSONException e) {
