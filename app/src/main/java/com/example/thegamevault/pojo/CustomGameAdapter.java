@@ -91,8 +91,9 @@ public class CustomGameAdapter extends RecyclerView.Adapter<CustomGameAdapter.Cu
                             .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
+                                    Game game = games.get(getLayoutPosition());
                                     GameDatabase db = new GameDatabase(context);
-                                    db.addGame(new Game(name.getText().toString(), gameImage.toString(), rating.getText().toString(), released.getText().toString()));
+                                    db.addGame(new Game(name.getText().toString(), game.getImage(), rating.getText().toString(), released.getText().toString()));
                                     db.close();
                                 }
                             })

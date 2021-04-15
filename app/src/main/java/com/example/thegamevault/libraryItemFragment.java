@@ -105,9 +105,10 @@ public class libraryItemFragment extends Fragment {
         //This will find and set the image for the savedImage using Picasso
         if (mParam2 != null){
             ImageView gameImage = view.findViewById(R.id.savedGameImage);
-           // gameImage.setImageDrawable(PictureDrawable.createFromPath(mParam2));
+            //gameImage.setImageDrawable(Drawable.createFromPath(mParam2));
+            Log.d("testing", mParam2);
 
-            Picasso.get().load(mParam2).resize(100, 100).into(gameImage);
+            Picasso.get().load(mParam2).resize(800, 800).into(gameImage);
 
 
         }
